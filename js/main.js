@@ -10,11 +10,11 @@ function search() {
     } if(!successBlock.classList.contains('d-none')){
         successBlock.classList.add('d-none');
     }
-    const lang  = document.querySelector('#lang').value;
+    // const lang  = document.querySelector('#lang').value;
     const location = document.querySelector('#location');
     const value = location.value.trim();
     if (value.length > 0) {
-        fetch(URL_FOR_CURRENT + '?q=' + value + '&key=' + KEY + '&lang='+lang)
+        fetch(URL_FOR_CURRENT + '?q=' + value + '&key=' + KEY)
             .then(response => response.json())
             .then(json => setTimeout(()=> handleResponseJson(json), 400));
     }
@@ -28,6 +28,7 @@ function handleResponseJson(json) {
     if (json.error) {
         errorBlock.classList.remove('d-none');
         errorBlock.classList.remove('opacity-0');
+        errorBlock.children.item(1).textContent = json.error.message;
         weatherix.style.height = '605px';
         return;
     }
